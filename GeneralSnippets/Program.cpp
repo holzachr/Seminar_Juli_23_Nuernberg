@@ -52,7 +52,7 @@ int main()
         //main_initializer_list();
         //main_input_output_streams();  
         //main_invoke();
-        //main_lambdas();
+        main_lambdas();
         //main_lambda_and_closure();
         //main_lambdas_this_closure();
         //main_literals();
@@ -69,7 +69,7 @@ int main()
         //main_range_based_for_loop();
         //main_reference_wrapper();
         //main_regular_expressions();
-        main_rvalue_lvalue();
+        //main_rvalue_lvalue();
         //main_sfinae();
         //main_sfinae_02();
         //main_shared_ptr();

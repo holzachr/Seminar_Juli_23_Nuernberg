@@ -6,10 +6,115 @@ module modern_cpp:lambda;
 
 namespace Lambdas {
 
+    //long belegeVor()
+    //{
+    //    static int i = 0;
+
+    //    i++;
+
+    //    // 2 * i + 1
+    //    return 2 * i + 1;
+    //}
+
+    //// Besser: Template-Funktion, da typunabhängig
+    //template <typename T>
+    //auto belegeVor()
+    //{
+    //    static int i = 0;
+
+    //    i++;
+
+    //    // 2 * i + 1
+    //    return 2 * i + 1;
+    //}
+
+    //// Statt Template, historisch, Variante 1: "Der Funktor" = aufrufbares Objekt
+    //// = Objekt, das den ()-Aufrufoperator bereitstellt
+    //class Vorbeleger
+    //{
+    //private:
+    //    int m_factor;
+    //    int m_i;
+
+    //public:
+    //    Vorbeleger(int factor) : m_factor(factor), m_i(0) {}
+
+    //    // Statt int belegeVor() {}: Aufrufoperator!
+    //    auto operator () ()
+    //    {
+    //        m_i++;
+    //        return m_factor * m_i + 1;
+    //    }
+    //};
+
+    //// Funktor-Verwendung:
+    //void wasIstEinFunktor()
+    //{
+    //    Vorbeleger beleger(3);  // Funktor-Konstruktor
+
+    //    beleger();              // Funktor-Aufruf
+    //}
+
+
+
+    //void wiederholung()
+    //{
+    //    // using = typedef
+    //    typedef std::vector<long> MyContainer;      // <--- Zentrale Definition
+    //    using MyContainer = std::vector<long>;      // Geht auch
+
+    //    // STL-Container
+    //    MyContainer numbers(10);
+
+    //    // Iterator-Objekt = Position
+    //    // STL-Iteratoren
+    //    auto start = numbers.begin();
+    //    std::vector<long>::iterator start2 = numbers.begin();   // Eigentlich von diesem Typ
+    //    MyContainer::iterator start3 = numbers.begin();         // Mit using
+
+    //    auto end = numbers.end();
+
+    //    // STL-Algorithmus
+    //    // => verwendet automatisch std::memset, ohne notwendige manuelle Berechnung des Bytecount, void*-Adresse etc.
+    //    std::fill(
+    //        start,
+    //        end,
+    //        123);
+
+    //    // Geht auch, aber schlechte Performance wegen Einzelzugriffen
+    //    for (int i = 0; i < numbers.size(); i++)
+    //    {
+    //        numbers[i] = 123;
+    //    }
+
+    //    // Für den Problemfall numbers[i] = 2 * i + 1:
+    //    // Historische Lösung, STL aber nicht mehr zeitgemäß
+    //    std::generate(
+    //        start,
+    //        end,
+    //        belegeVor // 2 * i + 1
+    //    );
+
+    //    std::generate(
+    //        start,
+    //        end,
+    //        belegeVor<long> // 2 * i + 1
+    //    );
+
+    //    Vorbeleger beleger(2);
+    //    std::generate(
+    //        start,
+    //        end,
+    //        // 2 * i + 1
+    //        &beleger
+    //    )
+    //}
+
     bool compare (int n1, int n2) {
         return n1 < n2;
     }
 
+    // Funktor = aufrufbares Objekt
     class Comparer
     {
     private:
@@ -33,6 +138,7 @@ namespace Lambdas {
 
     void test_01()
     {
+        // Ein Lambda ist eine lokale Klasse mit einem Aufrufoperator!
         // local class within function possible
         class LocalComparer
         {
@@ -57,11 +163,32 @@ namespace Lambdas {
 
         std::sort(std::begin(vec), std::end(vec), compare);
         // or
-        std::sort(std::begin(vec), std::end(vec), Comparer{});
+        std::sort(std::begin(vec), std::end(vec), Comparer());
         // or
         std::sort(std::begin(vec), std::end(vec), Comparer{false});
         // or
         std::sort(std::begin(vec), std::end(vec), LocalComparer{});
+        // or
+        std::sort(
+            std::begin(vec),
+            std::end(vec),
+            [] (int n1, int n2) {             // <--- LAMBDA-Funktion
+                std::cout << "Lambda mit " << n1 << " und " << n2 << std::endl;
+                return n1 < n2;
+            }
+        );
+
+        // or
+        std::sort(
+            std::begin(vec), 
+            std::end(vec), 
+            [flag = true] (int n1, int n2) {             // <--- LAMBDA-Funktion mit Eingangsparametern
+                std::cout << "Lambda mit " << n1 << " und " << n2 << std::endl;
+                return (flag) ? n1 < n2 : n1 > n2;       // Mit ternärem Operator für Modi
+           }
+        );
+
+        // Ein LAMBDA ist ein OBJEKT, keine Funktion!
 
         for (int n : vec) {
             std::cout << n << ' ';
@@ -124,8 +251,15 @@ namespace Lambdas {
         // in the lambda-capture without specifying its type:
 
         // lambda with variable definition
-        auto lambda = [variable = 10] () { return variable; };
-        std::cout << lambda() << std::endl;
+        auto lambda = [variable = 10] () { return variable; };      // Einer Lambda-Funktion einen Namen zu geben ist nicht der Regelfall!
+        std::cout << lambda() << std::endl;                         // Aufruf der Lambda-Funktion mit Namen
+
+        // lambda with member / instance variable definition
+        auto lambda2 = [variable = 10]() mutable {                  // <-- mutable!
+            variable++;
+            return variable; 
+        };     
+        std::cout << "test05 " << lambda2() << std::endl;                        // Aufruf der Lambda-Funktion mit Namen
 
         // Captures default to 'const value':
         // The mutable keyword removes the 'const' qualification from all captured variables
@@ -232,16 +366,16 @@ namespace Lambdas {
 void main_lambdas()
 {
     using namespace Lambdas;
-    test_00();
-    test_01();
-    test_02();
-    test_03();
-    test_04();
+    //test_00();
+    //test_01();
+    //test_02();
+    ////test_03();
+    //test_04();
     test_05();
-    test_06();
-    test_07();
-    test_08();
-    test_09();
+    //test_06();
+    //test_07();
+    //test_08();
+    //test_09();
 }
 
 // =====================================================================================

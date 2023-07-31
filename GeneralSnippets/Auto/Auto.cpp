@@ -114,13 +114,6 @@ namespace Auto_Examples {
         return message;
     }
 
-
-
-
-
-
-
-
     void test_01_e() {
 
         auto msg = getMessage();
