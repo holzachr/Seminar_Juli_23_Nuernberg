@@ -114,6 +114,13 @@ namespace Auto_Examples {
         return message;
     }
 
+
+
+
+
+
+
+
     void test_01_e() {
 
         auto msg = getMessage();
@@ -225,6 +232,7 @@ void main_auto()
     test_01_g();
     test_01_h();
 }
+
 
 // =====================================================================================
 // End-of-File
