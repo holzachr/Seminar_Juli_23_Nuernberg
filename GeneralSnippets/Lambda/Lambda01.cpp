@@ -235,7 +235,8 @@ namespace Lambdas {
     void test_04() {
 
         // defining a lambda without 'auto'
-        std::function<int(int, int, int)> threeArgs([](int x, int y, int z) {
+        // --> Ein Lambda ist eigentlich vom Typ std::function, ähnlich einem Funktionspointer!
+        std::function<int(int, int, int)> threeArgs([](int x, int y, int z) -> int {
             return x + y + z; 
             }
         );
@@ -279,18 +280,24 @@ namespace Lambdas {
         int n = 1;
         int m = 2;
 
-        auto l1 = [=] {
+        // Zugriff auf lokale Variablen:
+            
+        // Alle als Kopie [=] = 1, 2
+        auto l1 = [=] {                                                 
             std::cout << "Copy:      " << n << " " << m << std::endl;
         };
 
+        // Alle als Referenz [&] = 3, 4
         auto l2 = [&] {
             std::cout << "Reference: " << n << " " << m << std::endl;
         };
 
+        // n als Referenz, m als Kopie = 3, 2
         auto l3 = [&, m] {
             std::cout << "Both:      " << n << " " << m << std::endl;
         };
 
+        // n als Kopie, m als Referenz = 1, 4
         auto l4 = [=, &m] {
             std::cout << "More both: " << n << " " << m << std::endl;
         };
@@ -333,7 +340,7 @@ namespace Lambdas {
         auto outerLambda1 = test_07_helper_a();
         auto outerLambda2 = test_07_helper_b();
         outerLambda1();
-        outerLambda2();
+        outerLambda2();     // Gibt ungültige Ausgabe, weil n und m als Referenzen mit Auslaufen der Funktion test_07_helper_b() nicht mehr in Scope sind!
     }
 
     void test_08() {
