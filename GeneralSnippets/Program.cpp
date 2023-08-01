@@ -52,7 +52,7 @@ int main()
         //main_initializer_list();
         //main_input_output_streams();  
         //main_invoke();
-        main_lambdas();
+        //main_lambdas();
         //main_lambda_and_closure();
         //main_lambdas_this_closure();
         //main_literals();
@@ -72,7 +72,7 @@ int main()
         //main_rvalue_lvalue();
         //main_sfinae();
         //main_sfinae_02();
-        //main_shared_ptr();
+        main_shared_ptr();
         //main_sso();
         //main_static_assert();
         //main_string_view();

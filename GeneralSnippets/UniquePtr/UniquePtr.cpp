@@ -12,14 +12,23 @@ namespace UniquePointerGeneral {
         return ptr;
     }
 
+    // Nur die REFERENZ kann einen unique_ptr an ein Unterprogramm weiterreichen.
+    // Ansonsten würde ein unzulässige KOPIE erzeugt werden - nicht mehr unique!
     void storeUniquePointer(std::unique_ptr<int>& ptr)
     {
         std::cout << "*ptr:    " << *ptr << std::endl;
         (*ptr)++;
         std::cout << "*ptr:    " << *ptr << std::endl;
 
+        // Wäre hier möglich:
         // take ownership right now:
         // std::unique_ptr<int> ptr2{ std::move(ptr) };
+
+        // ptr2 würde beim Funktionsaustritt hier destructed werden,
+        // das Original in der darüber liegenden Funktion wäre
+        // bereits nach dem std::move in dieser Funktion ungültig geworden.
+        // --> Wenn unique_ptr hier vom Stack fällt, sind alle unique_ptr
+        //     ungültig geworden!
     }
 
     void storeUniquePointerSafe(const std::unique_ptr<int>& ptr)
@@ -32,6 +41,9 @@ namespace UniquePointerGeneral {
         // std::unique_ptr<int> ptr2{ std::move(ptr) };
     }
 
+    // Man kann auch den eigentlichen Zeiger mit .get() an Unterprogramme
+    // weiter reichen, die Ownership ist jedoch NICHT weiter gereicht!
+    // Natürlich darf man ihn hier nicht deleten.
     void storeUniquePointerAlternate(int* ptr)
     {
         std::cout << "*ptr:    " << *ptr << std::endl;
@@ -65,12 +77,12 @@ namespace UniquePointerGeneral {
 
         // second std::unique_ptr by moving 'ptr1' to 'ptr2',
         // 'ptr1' doesn't own the object anymore
-        std::unique_ptr<int> ptr2{ std::move(ptr1) };
-        // std::cout << "*ptr1: " << *ptr1 << std::endl;  // crashes 
+        std::unique_ptr<int> ptr2{ std::move(ptr1) };       // Verschieben mit std::move()
+        // std::cout << "*ptr1: " << *ptr1 << std::endl;    // crashes 
         std::cout << "*ptr2:   " << *ptr2 << std::endl;
 
         std::unique_ptr<int> ptr3;
-        ptr3 = std::move(ptr2);
+        ptr3 = std::move(ptr2);                             // Verschieben mit std::move()
 
         int* ip3{ ptr3.get() };
         (*ip3)++;

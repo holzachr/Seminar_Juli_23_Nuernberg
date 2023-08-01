@@ -40,6 +40,10 @@ namespace WeakPointer {
             // need shared pointer to access weak pointer
             std::cout << "Is weak ptr expired:        " << weakPtr.expired() << std::endl;
 
+            // Lock-Aufruf auf schwachen Zeiger kann starken Zeiger mit 2 strong references 
+            // und 1 weak reference erzeugen.
+            // Weak Pointer können nicht dereferenziert werden! Es muss immer erst ein shared_ptr
+            // daraus erzeugt werden.
             std::shared_ptr<int> ptr2{ weakPtr.lock() };
             if (ptr2 != nullptr) {
 
@@ -53,9 +57,12 @@ namespace WeakPointer {
             std::cout << "Is weak ptr expired:        " << weakPtr.expired() << std::endl;
             std::cout << "End-of-Scope" << std::endl;
         }
+        // Ab jetzt sind beide strong references ptr1 und ptr2 expired,
+        // der Weak-Pointer ist ab jetzt "expired"!
 
         std::cout << "Is weak ptr expired:        " << weakPtr.expired() << std::endl;
 
+        // Ein weiterer Lock-Versuch ist erfolglos, da keine starke Referenz mehr dahinter liegt!
         // Note: C++17 initializer syntax: limited variable scope
         if (std::shared_ptr<int> ptr3; (ptr3 = weakPtr.lock()) == nullptr) {
             std::cout << "Don't get the resource!" << std::endl;
@@ -82,6 +89,7 @@ namespace WeakPointer {
     private:
         std::shared_ptr<RightNode> m_rightNode;   // <== shared or weak ?
         std::shared_ptr<LeftNode> m_leftNode;     // <== shared or weak ?
+        // Müssen weak sein, damit die Ringbeziehung beim Destructor-Call durchbrochen wird!
 
     public:
         ParentNode() {
@@ -136,6 +144,11 @@ namespace WeakPointer {
 
         parent->setRightNode(rightNode);
         parent->setLeftNode(leftNode);
+
+        // Problem: Es weren alle 3 Konstruktoren (parent, left, right) aufgerufen,
+        // jedoch keine Destruktoren!
+        // --> Alle enthalten shared_ptr, deren Referenzen nicht Null werden können
+        // = Henne-Ei-Problem!
     }
 
     void test_03()
