@@ -1,5 +1,8 @@
 // =====================================================================================
 // Tuple.cpp // std::tuple
+// 
+//  Ein Tuple ist wie ein Struct für Schreibfaule!
+// 
 // =====================================================================================
 
 module modern_cpp:tuple;
@@ -99,6 +102,7 @@ namespace TupleSamples {
             << "Value: " << val << std::endl
             << "Name:  " << name << std::endl;
 
+        // Clou: For-RangeBasedLoop, Const-Ref, Auto, Structured Binding!
         for (const auto& [id, abbr, val, name] : mySheet) {
 
             std::cout 
@@ -108,6 +112,9 @@ namespace TupleSamples {
                 << "Name:  " << name << std::endl;
         }
     }
+
+    // =======================================================
+    // C++ 14: std::tie
 
     void test_04()
     {
