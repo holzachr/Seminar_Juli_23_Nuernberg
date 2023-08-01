@@ -1,5 +1,5 @@
 // =====================================================================================
-// StructuredBinding.cpp // Structured Binding
+// StructuredBinding.cpp // Structured Binding: C++ 17
 // =====================================================================================
 
 module modern_cpp:structured_binding;
@@ -15,11 +15,14 @@ namespace StructuredBinding {
     void test_01() {
         auto result = divide_remainder(16, 3);
         std::cout << "16 / 3 is "
+            // Pair: Schlechte Lesbarkeit der Bedeutung der Rückgabewerte
             << result.first << " with a remainder of "
             << result.second << std::endl;
     }
 
     void test_02() {
+        // Structured Binding: [ ] = ...;
+        // Sprechende Bezeichner für Rückgabe-Pair
         auto [quotient, remainder] = divide_remainder(20, 3);
         std::cout << "20 / 3 is "
             << quotient << " with a remainder of "
@@ -27,6 +30,7 @@ namespace StructuredBinding {
     }
 
     void test_03() {
+        // Symbolische Namen
         int arr[] = { 10, 11, 12 };
         auto [ a, b, c ] = arr;
         std::cout << a << ", " << b << ", " << c << std::endl;
@@ -39,6 +43,8 @@ namespace StructuredBinding {
 
         b = 111;
         std::cout << arr[0] << ", " << arr[1] << ", " << arr[2] << std::endl;
+// Wenn nicht Ref:   10                11                12
+// Wenn Referenz:    10                111               12
     }
 
     struct Point 
