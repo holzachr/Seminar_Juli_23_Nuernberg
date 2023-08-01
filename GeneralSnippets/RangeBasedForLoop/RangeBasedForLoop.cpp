@@ -59,7 +59,7 @@ namespace RangeBasedForLoop {
         std::for_each(
             std::begin(vec),               // Iterator-object for begin of range
             std::end(vec),                 // Iterator-object for end of range
-            ElementProcessor{}        // "callable" object
+            ElementProcessor{}             // "callable" object // operator()
         );
         std::cout << std::endl;
 
@@ -85,18 +85,20 @@ namespace RangeBasedForLoop {
         std::cout << std::endl;
 
         // g) Same as f), using 'const int&'
+// !!!  // const-Ref NICHT für elementare Datentypen! Nur für komplexe/STL-Container!
         for (const int& n : vec) {
             std::cout << n << " ";
         }
         std::cout << std::endl;
 
-        // h) Same as f): Using 'auto' keyword to cause type inference to be used
+        // h) Same as f): Using 'auto' keyword to cause type deduction to be used
         for (auto n : vec) {
             std::cout << n << " ";
         }
         std::cout << std::endl;
 
-        // i) Same as g), using 'const auto&': type inference by reference
+        // i) Same as g), using 'const auto&': type deduction by reference
+// !!!  // const-Ref NICHT für elementare Datentypen! Nur für komplexe/STL-Container!
         for (const auto& n : vec) {
             std::cout << n << " ";
         }
@@ -126,6 +128,7 @@ namespace RangeBasedForLoop {
         }
         std::cout << std::endl;
 
+        // C++ 20
         // l) Range-based 'for' loop with initializer,
         // we can now use the index variable inside the for statement
         for (int index{}; int n : vec) {
