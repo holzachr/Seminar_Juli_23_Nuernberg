@@ -1,5 +1,12 @@
 // =====================================================================================
-// Variant.cpp // std::variant
+// Variant.cpp // std::variant: C++ 17
+// 
+//  Ist ein Objekt das Daten unterschiedlichen Typs enthalten kann.
+//  Zu einem Zeitpunkt nur nur eine Variable.
+// 
+//  Beispiel Excel: Zelle: Number/String/Date/Double
+//           Spiel: Board: Figure: Pro Boardslot eine andere Figur
+// 
 // =====================================================================================
 
 module modern_cpp:variant;
@@ -8,6 +15,8 @@ namespace VariantDemo {
 
     void test_01() {
 
+        // Festlegung zur Übersetzungszeit: Welche Datentypen müssen das sein können?
+        // Ohne Festlegung: std::any!
         std::variant<int, float, std::string> var{ 10.5f };
 
         std::cout
@@ -104,8 +113,55 @@ namespace VariantDemo {
         std::variant<int, float, std::string> var{ 3.5f };
 
         // using a generic visitor (matching all types in the variant)
+        // Ein Lambda!
         auto visitor = [](auto const& elem) {
             std::cout << elem << std::endl;
+        };
+
+        std::visit(visitor, var);
+
+        var = 10;
+        std::visit(visitor, var);
+
+        var = std::string{ "Hello" };
+        std::visit(visitor, var);
+    }
+
+    // Betrachtung von Datentypen: Type Traits!
+    void test_03b() {
+
+        std::variant<int, float, std::string> var{ 3.5f };
+
+        using ElemType = decltype(elem);  // z.B. int
+        using ElemTypeWithoutReference = std::remove_reference<ElemType>::type;   // Für auto&-Zugriff
+        using ElemTypeWithoutRefAndConst = std::remove_const<ElemTypeWithoutReference>::type; // Für const auto&-Zugriff
+
+        // using a generic visitor (matching all types in the variant)
+        // Ein Lambda!
+        auto visitor = [](const auto& elem) {
+            
+            if constexpr (std::is_same<ElemTypeWithoutRefAndConst, int>::value == true) {
+                std::cout << "Ich bin ein int " << elem << std::endl;
+            }
+            else if constexpr (std::is_same<ElemTypeWithoutRefAndConst, float>::value == true) {
+                std::cout << "Ich bin ein float " << elem << std::endl;
+            }
+            // constexpr notwendig für den std::string, elem.size()-Fall, da sonst
+            // für jeden Typ (int, float, string) jeweils eine Instanz des Lambda mit 
+            // jeweils allen 3 Pfaden entstehen würden, wobei int und float kein size() 
+            // beherrschen -> Compile-Error!
+            // Mit constexpr wird zur COMPILEzeit ausgewertet, welche Pfade für welche
+            // Instanz des jeweiligen Lambdas TATSÄCHLICH notwendig sind!
+            // Hiermit wird am Ende auch Maschinencode eingespart!
+            //       \/
+            else if constexpr (std::is_same<ElemTypeWithoutRefAndConst, std::string>::value == true) {
+                std::cout << "Ich bin ein String " << elem << std::endl;
+                std::cout << " und bin " << elem.size() << "Zeichen lang" << std::endl;
+            }
+            else
+            {
+                std::cout << "Unbekannt" << std::endl;
+            }
         };
 
         std::visit(visitor, var);
@@ -135,6 +191,7 @@ namespace VariantDemo {
     }
 
     // -------------------------------------------------------------------
+    // Beste Lösung mit Fallunterscheidung: Ein Funktor!
 
     class Visitor
     {
