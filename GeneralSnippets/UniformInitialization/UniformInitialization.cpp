@@ -11,6 +11,11 @@ namespace UniformInitialization {
 
     void test_01()
     {
+        // {} initialisiert mit dem datentypspezifischen Nullwert!
+        // int n = 0; \
+        // int n{};    = Alles dasselbe!
+        // int n{0};  /
+
         int n{};              // n equals 0
         float f{};            // f equals 0.0
         double d{};           // d equals 0.0
