@@ -6,6 +6,7 @@ module modern_cpp:transform;
 
 namespace AlgorithmTransform {
 
+    // Mit vorinitialisiertem Zielvektor
     void test_01()
     {
         // very simple phone book
@@ -28,7 +29,7 @@ namespace AlgorithmTransform {
         std::transform(
             std::begin(phonebook),
             std::end(phonebook),
-            std::begin(names),    // beginning of the destination range
+            std::begin(names),    // beginning of the destination range, Zugriff mit .at(i) / [i]
             [](const std::pair<std::string, size_t>& entry) {
                 return std::get<0>(entry);
             }
@@ -40,6 +41,8 @@ namespace AlgorithmTransform {
         }
     }
 
+    // Mit leerem Zielvektor und back_inserter(), 
+    // fügt dem leeren Zielvektor jeweils am Ende hinzu
     void test_02()
     {
         // very simple phone book
