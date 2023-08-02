@@ -37,7 +37,8 @@ constexpr auto crcTable = [] {
         }
     }
     return A;
-}();
+}();  // <-- Achtung, LAMBDA-AUFRUF!! Self-invoking Lambda!
+// crcTable steht nicht für den Lambda, sondern für dessen Ergebnis!
 
 constexpr auto calcCRC(uint8_t len, const uint8_t* data) {
     uint8_t checksum = 0;

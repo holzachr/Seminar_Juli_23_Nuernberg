@@ -22,6 +22,10 @@ namespace ConstExprComplex {
         constexpr float imag() const { return m_imag; }
 
         // operators
+        // 'friend': Erlaub dem AUSSERHALB der Klasse stehenden +-Operator
+        // den Zugriff auf die privaten Member dieser Klasse.
+        // Allerdings ist dieses Beispiel irgendwie "komisch", "untypisch".
+        // Lieber nach besseren Beispielen suchen.
         friend constexpr Complex operator+(const Complex& x, const Complex& y)
         {
             float real = x.real() + y.real();
@@ -37,7 +41,7 @@ namespace ConstExprComplex {
         constexpr Complex c2{ 3.0, 3.0 };
 
         constexpr float r1 = c1.real();
-        constexpr Complex c3 = c1 + c2;
+        constexpr Complex c3 = c1 + c2;     // Nach dem KOMPILIEREN: Intellisense zeigt Wert, ohne Laufzeit!!
         constexpr float r2 = c3.real();
 
         // verify 'constness' with the help of disassembly and

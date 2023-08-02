@@ -34,6 +34,8 @@ namespace Literals_With_Separators {
 namespace Literals_Color_Runtime {
 
     class Color {
+        // Friend: der AUSSERHALB der Klasse (s.u.) liegende <<-Operator
+        // hat Zugriff auf die privaten Member dieser Klasse.
         friend std::ostream& operator<< (std::ostream&, const Color&);
 
     private:
@@ -59,6 +61,7 @@ namespace Literals_Color_Runtime {
     }
 
     // literal operator ("cooked" version)
+    // Erwartet jeweils den größten Datentyp: "unsigned long long" / "long double" / "char *"
     Color operator"" _rgb(unsigned long long int value) {
 
         if (value > 0xFFFFFF) {

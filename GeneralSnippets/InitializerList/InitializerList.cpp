@@ -101,7 +101,7 @@ namespace InitializerList {
 
     void test_04() {
         std::vector<int> vec1{10};  // 1 Element, initialisiert mit "10" -> initializer_list!
-        std::vector<int> vec1(10);  // 10 Elemente!
+        std::vector<int> vec2(10);  // 10 Elemente!
 
         TinyContainer tc0;                                 // TinyContainer::TinyContainer ()
         TinyContainer tc1{ 1, 2, 3, 4 };                   // TinyContainer::TinyContainer (std::initializer_list<int>)

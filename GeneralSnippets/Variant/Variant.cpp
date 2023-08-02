@@ -128,7 +128,7 @@ namespace VariantDemo {
     }
 
     // Betrachtung von Datentypen: Type Traits!
-    void test_03b() {
+ /* void test_03b() {
 
         std::variant<int, float, std::string> var{ 3.5f };
 
@@ -172,6 +172,7 @@ namespace VariantDemo {
         var = std::string{ "Hello" };
         std::visit(visitor, var);
     }
+    */
 
     // -------------------------------------------------------------------
 
