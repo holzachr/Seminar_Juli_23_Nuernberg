@@ -4,6 +4,38 @@
 
 module modern_cpp:variadic_templates;
 
+namespace VariadicTemplates_Seminar {
+
+    template<typename T>
+    void printer(T n) 
+    {
+        std::cout << n << ' ';
+    }
+
+    // U = "Pack", steht in diesem Fall für mehrere Parameter!
+    template<typename T, typename ... TRest>
+    void printer(T n, TRest ... m)          // "... m": einpacken: 2, 3, 4, 5
+    {
+        std::cout << n << ' ';
+        printer<TRest ...>(m ...);          // "m ...": auspacken: rekursiver Selbstaufruf mit Parameter 2, 3, 4, 5
+    }
+
+    void test_seminar()
+    {
+        // Nicht typsicher:
+        //printf("%s, ...", 1, 34.56, "fasjj", std::string{"asdf"});
+
+        // Schwierig: beliebige unterschiedliche Parameter und deren Anzahl
+        //printer(1, 34.56, "fasjj", std::string{"asdf"});
+
+        // Für zwei:
+        printer(1, 2);
+
+        // Für mehrere:
+        printer<int, int, int, int, int>(1, 2, 3, 4, 5);    // 5 Args
+    }
+}
+
 namespace VariadicTemplatesIntro_01 {
 
     // ====================================================================
@@ -133,8 +165,13 @@ namespace VariadicTemplatesIntro_03 {
         return std::unique_ptr<T>{ new T{ args... } };
     }
 
-    // bessere Variante: Mit Universal Referenz
+    // bessere Variante: Mit Universal Referenz zur Vermeidung von Kopien
+    // Universal Referenz: Kann auch rvalue, Move-Semantik!
+    // Siehe PerfectForwarding.cpp
+    // Denn im Aufrufbeispiel: my_make_unique_ex<Unknown>(100, 101, 102): (100, ...) = rvalue!!!
     template<typename T, typename... TArgs>
+    // Eigentlich erwartet:              const TArgs&
+    // Universal Referenz:               TArgs&&
     std::unique_ptr<T> my_make_unique_ex(TArgs&&... args)
     {
         return std::unique_ptr<T>{ new T{ std::forward<TArgs>(args)... } };
@@ -146,6 +183,9 @@ namespace VariadicTemplatesIntro_03 {
         std::unique_ptr<Unknown> up2 = my_make_unique<Unknown>(1);
         std::unique_ptr<Unknown> up3 = my_make_unique<Unknown>(10, 11);
         std::unique_ptr<Unknown> up4 = my_make_unique<Unknown>(100, 101, 102);
+        
+        // Bei C++ <=17 erforderlich:                          \/   \/   \/
+        std::unique_ptr<Unknown> up4 = my_make_unique<Unknown, int, int, int>(100, 101, 102);
 
         int n = 33, m = 34;
         std::unique_ptr<Unknown> up5 = my_make_unique<Unknown>(n, m);
@@ -293,6 +333,9 @@ namespace VariadicTemplatesIntro_05 {
 
 void main_variadic_templates_introduction()
 {
+    using namespace VariadicTemplates_Seminar;
+    test_seminar();
+
     using namespace VariadicTemplatesIntro_01;
     test_printer_01();
 
