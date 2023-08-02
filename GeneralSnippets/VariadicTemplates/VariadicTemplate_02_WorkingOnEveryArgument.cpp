@@ -20,11 +20,15 @@ namespace VariadicTemplatesWorkingOnEveryArgument {
     //template <typename... TArgs>
     //void doSomethingForAll(const TArgs& ... args) {
     //    doSomething(args)...;
+    // Erwartet: doSomething(1), doSomething(2), ... -> geht so nicht!
     //}
 
     template <typename... TArgs>
     void doSomethingForAll(const TArgs& ... args) {
         // std::initializer_list<int> list = { (doSomething(args), 0)... };
+
+        // doSomething() gibt void zurück, initializer_list<int> erwartet jedoch int!
+        // Verwendung des , = Sequenz-Operators!       \/                                        
         std::initializer_list<int> { (doSomething(args), 0)... };
     }
 
