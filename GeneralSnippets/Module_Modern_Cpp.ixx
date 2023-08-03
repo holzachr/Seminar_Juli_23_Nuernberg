@@ -70,7 +70,10 @@ export import :type_traits;
 export import :uniform_initialization;
 export import :unique_ptr;
 export import :variadic_templates;
+
+// Wir exportieren das, was wir mit "import :variant" gewinnen, als Bestandteil von "export modern_cpp" (Zeile 5).
 export import :variant;
+
 export import :virtual_base_class_destructor;
 export import :virtual_override_final;
 export import :weak_ptr;

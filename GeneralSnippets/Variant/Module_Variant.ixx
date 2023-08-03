@@ -1,12 +1,12 @@
 // =====================================================================================
-// Module Interface Partition 'variant'
+// Module Interface Partition 'variant' ab C++ 20
 // =====================================================================================
 
 export module modern_cpp:variant;
 
 import std;
 
-export void main_variant();
+export void main_variant();		// Wie Header-Deklaration
 
 // =====================================================================================
 // End-of-File

@@ -8,6 +8,7 @@ export module hello_world;
 
 import std;
 
+// export exportiert den gesamten Namespace inkl. allem.
 export namespace MyHelloWorld
 {
     int globalData{};

@@ -9,6 +9,7 @@
 // 
 // =====================================================================================
 
+// Untermodul (Partition) anziehen. Enthält u.A. "import std;".
 module modern_cpp:variant;
 
 namespace VariantDemo {
@@ -315,7 +316,9 @@ namespace VariantDemo {
     }
 }
 
-void main_variant()
+// C++-Module: Könnte hier auch direkt mit export exportiert werden.
+// Wird jedoch erst in Module_Variant.ixx exportiert, um die Entscheidung auszulagern.
+void main_variant()         
 {
     using namespace VariantDemo;
     test_01();
