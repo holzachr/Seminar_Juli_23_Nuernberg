@@ -61,7 +61,7 @@ int main()
         //main_metaprogramming_02();
         //main_modules_import();
         //main_move_semantics();
-        main_optional();
+        //main_optional();
         //main_perfect_forwarding();
         //main_raii();
         //main_raii_02();
@@ -73,7 +73,7 @@ int main()
         //main_sfinae();
         //main_sfinae_02();
         //main_shared_ptr();
-        //main_sso();
+        main_sso();
         //main_static_assert();
         //main_string_view();
         //main_structured_binding();
