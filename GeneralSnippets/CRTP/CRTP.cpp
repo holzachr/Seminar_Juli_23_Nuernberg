@@ -38,6 +38,8 @@ namespace CRTP {
         T* derived() { return static_cast<T*>(this); }
     };
 
+    // Vererbung von Template-Klasse!
+    //                             \/
     class Button : public Control<Button>
     {
     public:
