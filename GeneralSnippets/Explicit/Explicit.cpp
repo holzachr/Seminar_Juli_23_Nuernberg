@@ -15,6 +15,8 @@ namespace KeywordExplicit {
         // c'tors
         Complex() : Complex {0.0, 0.0}{}
 
+        // Mit "explicit" wird Zeile 41 beim Kompilieren fehlschlagen.
+        // Explizite Typkonvertierung wird damit ausgeschlossen!
         /* explicit */ Complex(double real) :   // remove or add keyword 'explicit'
             m_real{ real }, m_imag{} {}
 
