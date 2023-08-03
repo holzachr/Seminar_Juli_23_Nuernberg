@@ -8,13 +8,13 @@ namespace AnySamples {
 
     void test_01_any() 
     {
-        std::any a{ 1 };
+        std::any a{ 1 };    // Enthält jetzt (zur Laufzeit!) einen Int
         std::cout << a.type().name() << ": " << std::any_cast<int>(a) << std::endl;
 
-        a = 3.14;
+        a = 3.14;           // Jetzt einen Float
         std::cout << a.type().name() << ": " << std::any_cast<double>(a) << std::endl;
 
-        a = true;
+        a = true;           // Jetzt ein Bool
         std::cout << a.type().name() << ": " << std::any_cast<bool>(a) << std::endl;
 
         // bad cast
