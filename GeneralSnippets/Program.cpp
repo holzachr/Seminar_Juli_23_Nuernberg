@@ -61,7 +61,7 @@ int main()
         //main_metaprogramming_02();
         //main_modules_import();
         //main_move_semantics();
-        //main_optional();
+        main_optional();
         //main_perfect_forwarding();
         //main_raii();
         //main_raii_02();
@@ -92,7 +92,7 @@ int main()
         //main_uniform_initialization();
         //main_unique_ptr();
         //main_variadic_templates_introduction();
-        main_variadic_templates_working_on_every_argument();
+        //main_variadic_templates_working_on_every_argument();
         //main_variadic_templates_sum_of_sums();
         //main_variadic_templates_mixins();
         //main_variant();

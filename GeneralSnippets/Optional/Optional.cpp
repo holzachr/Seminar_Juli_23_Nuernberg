@@ -1,5 +1,5 @@
 // =====================================================================================
-// Optional.cpp // std::optional
+// Optional.cpp // std::optional ab C++ 17
 // =====================================================================================
 
 module modern_cpp:optional;
@@ -12,16 +12,17 @@ namespace OptionalExamples {
 
     void test_01_optional() {
 
-        std::optional<int> someValue;
+        // Anstelle von int someValue, bool hasValue. Spart das Flag ein.
+        std::optional<int> someValue;       
 
-        if (someValue.has_value()) {
+        if (someValue.has_value()) {    // Wird nicht ausgeführt, da kein Wert
             
             std::cout << "Value:" << someValue.value() << std::endl;
         }
 
-        someValue = std::nullopt;
+        someValue = std::nullopt;       // Kein Wert in dieser Variable!
 
-        if (someValue) {
+        if (someValue) {                // Das gleiche wie someValue.has_value(), ebenfalls noch kein Wert
 
             std::cout << "Value:" << someValue.value() << std::endl;
         }
@@ -48,13 +49,13 @@ namespace OptionalExamples {
     {
 
     private:
-        std::optional<std::string> m_phone;
+        std::optional<std::string> m_phone;         // Ein Kontakt "muss keine Telefonnummer haben"
 
     public:
         Contact() : m_phone(std::nullopt) {}
 
         void setPhone(std::string phone) { m_phone = phone; }
-        std::optional<std::string> getPhone() { return m_phone; }
+        std::optional<std::string> getPhone() { return m_phone; }   // Rückgabe: Optional!
     };
 
     void test_02_optional() {
