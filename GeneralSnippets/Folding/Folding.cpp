@@ -1,5 +1,5 @@
 // =====================================================================================
-// Folding.cpp // Variadic Templates // Folding
+// Folding.cpp // Variadic Templates // Folding (ab C++ 17)
 // =====================================================================================
 
 module modern_cpp:folding;
