@@ -1,5 +1,5 @@
 // =====================================================================================
-// Array.cpp // std::array // std::to_array // std::span
+// Array.cpp // std::array (ab C++ 11) // std::to_array (ab C++ 20) // std::span (ab C++ 20)
 // =====================================================================================
 
 module modern_cpp:class_array;
@@ -17,6 +17,7 @@ namespace StdArray {
     void test_02() {
 
         /* initialization variants using CTAD: Class Template Argument Deduction
+        *  (Ca. ab C++ 17)
         */
 
         // type is deduced to std::array<double, 2>
@@ -54,7 +55,7 @@ namespace StdArray {
         std::cout << array[3] << std::endl;
 
         // undefined behaviour
-        // std::cout << myArray[5] << std::endl;
+        // std::cout << myArray[5] << std::endl;        // [] hat kein Bounds-Checking!
 
         // valid index
         array.at(2) = 33;
@@ -74,10 +75,13 @@ namespace StdArray {
         std::cout << std::endl;
     }
 
+    // Gilt nur für Arrays vom Typ int mit Länge 5 :-(
     void print(const std::array<int, 5>& array) {
         std::cout << "Length: " << array.size() << std::endl;
     }
 
+    // Dynamisch mit Template-Parametern, ABER: Bei 10 verschiedenen Array-Längen
+    // gibt es 10 verschiedene Implementierungen im Maschinencode :-(
     template<typename T, int Length>
     void print(const std::array<T, Length>& array) {
         std::cout << "Length: " << array.size() << std::endl;
