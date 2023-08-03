@@ -1,12 +1,12 @@
 // =====================================================================================
-// ConceptsRequiresFunctions.cpp
+// ConceptsRequiresFunctions.cpp (ab C++ 20)
 // =====================================================================================
 
 module modern_cpp:concepts_requires_functions;
 
 // using <concepts>
 template <typename T>
-concept Numerical = std::integral<T> || std::floating_point<T>;
+concept Numerical = std::integral<T> || std::floating_point<T>;         // Konzept anlegen...
 
 // using <type_traits>
 template <typename T>
@@ -15,7 +15,7 @@ concept NumericalEx = std::is_integral<T>::value || std::is_floating_point<T>::v
 namespace Requires_Clause {
 
     template <typename T>
-    requires Numerical<T>
+    requires Numerical<T>                                               // ...Konzept einfordern
     auto add(T a, T b)
     {
         return a + b;
