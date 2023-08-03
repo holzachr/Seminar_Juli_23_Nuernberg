@@ -29,6 +29,7 @@ namespace StringViewDemonstration {
         std::cout << sv << std::endl;
 
         s += "Sixty zippers were quickly picked from the woven jute bag";  // the content of s is reallocated !
+        // SV zeigt nicht mehr auf die richtige Speicherzelle!
 
         std::cout << sv << std::endl;
     }
