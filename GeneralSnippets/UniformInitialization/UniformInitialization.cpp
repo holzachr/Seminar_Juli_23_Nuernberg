@@ -124,7 +124,7 @@ namespace UniformInitialization {
     {
         std::vector<int> myArray{ 1, 2, 3, 4, 5 };
 
-        std::map<std::string, int> myMap
+        std::map<std::string, int> myMap   // std::pair // Schlüssel / Wert
         {
             { "Hans", 1958 },
             { "Sepp", 1956 } 

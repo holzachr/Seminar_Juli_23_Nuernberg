@@ -35,7 +35,7 @@ namespace RangeBasedForLoop {
 
         // a) Very, very classic style ... C-stylistic
         for (size_t i = 0; i != vec.size(); ++i) {
-            std::cout << vec[i] << " ";
+            std::cout << vec[i] << " ";  // break; continue; return; 
         }
         std::cout << std::endl;
 
@@ -47,7 +47,7 @@ namespace RangeBasedForLoop {
         );
         std::cout << std::endl;
 
-        // c) Same as b), modified ranges
+        // c) Same as b), modified ranges:  [from, to)
         std::for_each(
             std::next(std::begin(vec)),    // Iterator-object for begin of range
             std::prev(std::end(vec)),      // Iterator-object for end of range
@@ -74,7 +74,7 @@ namespace RangeBasedForLoop {
         std::cout << std::endl;
 
         // =========================================================================
-        // Range-based 'for' Loop examples
+        // Range-based 'for' Loop examples   // for_each
 
         // f) Using Range-based 'for' Loop: Very modern style
         for (int n : vec) {
@@ -88,12 +88,14 @@ namespace RangeBasedForLoop {
 // !!!  // const-Ref NICHT für elementare Datentypen! Nur für komplexe/STL-Container!
         for (const int& n : vec) {
             std::cout << n << " ";
+ 			n++;
         }
         std::cout << std::endl;
 
         // h) Same as f): Using 'auto' keyword to cause type deduction to be used
         for (auto n : vec) {
             std::cout << n << " ";
+            n++;
         }
         std::cout << std::endl;
 
@@ -101,6 +103,7 @@ namespace RangeBasedForLoop {
 // !!!  // const-Ref NICHT für elementare Datentypen! Nur für komplexe/STL-Container!
         for (const auto& n : vec) {
             std::cout << n << " ";
+            n++;
         }
         std::cout << std::endl;
 

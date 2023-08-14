@@ -34,6 +34,13 @@ namespace ConstExprComplex {
         }
     };
 
+    //constexpr Complex operator+(const Complex& x, const Complex& y)
+    //{
+    //    float real = x.m_real + y.m_real;
+    //    float imag = x.m_imag + y.m_imag;
+    //    return Complex{ real, imag };
+    //}
+
     void testComplex()
     {
         constexpr Complex c0{ };

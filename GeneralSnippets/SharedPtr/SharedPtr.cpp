@@ -30,6 +30,7 @@ namespace SharedPointer {
     // Bei Referenzübergabe wird der Use-Counter nicht erhöht, da keine
     // Kopie erzeugt wird!
     void storeSharedPointer(std::shared_ptr<int> ptr) 
+//	void storeSharedPointer(std::shared_ptr<int>& ptr) 
     {
         std::cout << "inner scope: " << ptr.use_count() <<  std::endl;
     }

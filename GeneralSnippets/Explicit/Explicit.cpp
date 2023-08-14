@@ -37,6 +37,7 @@ void main_keyword_explicit()
 
     // a Complex object
     Complex c{ 3.0, 0.0 };
+    Complex c2{ 3.0 };
 
     if (c == 3.0) {
         std::cout << "Same objects";

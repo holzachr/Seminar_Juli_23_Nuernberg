@@ -23,15 +23,15 @@ namespace LValueRValue {
 
         sayHello(a);
         sayHello("ABC");
-        sayHello(a + b);
+        sayHello(a + b);  // Konkatenation: temp. Objekt 
     }
 
     // -------------------------------------------------------------------
 
     void helper(std::string&& message) {
 
-        sayHello(message);
-        // sayHello(std::move(message));    // casting an lvalue to an rvalue
+        sayHello(std::move (message));  // i)  RValue: string&& ==> sayHello (&&)
+                            // ii) message ist ein Name: ==> sayHello (&)
     }
 
     void test02() {

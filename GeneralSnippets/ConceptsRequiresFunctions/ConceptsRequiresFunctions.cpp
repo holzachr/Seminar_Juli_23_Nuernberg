@@ -161,6 +161,16 @@ namespace Constrained_Template_Parameters {
 
 namespace Abbreviated_Function_Templates {
 
+    int add2(int a, int b)
+    {
+        return a + b;
+    }
+
+    auto add3(auto a, auto b)
+    {
+        return a + b;
+    }
+
     auto add(Numerical auto a, Numerical auto b)
     {
         return a + b;

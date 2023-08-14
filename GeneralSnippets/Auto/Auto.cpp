@@ -20,6 +20,13 @@ namespace Auto_Examples {
 
     void test_01_b() {
 
+        // JavaScript: Variablen mit dyn. Datentyp
+        //var z1;
+        //let z2;
+
+        auto z3 = 123.456f;   // Type Deduction  // Typableitung
+
+
         // auto figures out the below types
 
         auto i = 1;             // int
@@ -47,6 +54,58 @@ namespace Auto_Examples {
     {
         return f1 + f2;
     }
+
+    template <typename T, typename U>
+    auto tueWas(bool flag, T f1, U f2) -> decltype (f1 + f2)
+    {
+        if (flag) {
+            return f2; 
+        }
+        else {
+            return f1;
+        }
+    }
+
+    template <typename T, typename U>
+    decltype ( std::declval<T>() + std::declval<U>() )
+        tueWasEx(bool flag, T f1, U f2)
+    {
+        if (flag) {
+            return f2;
+        }
+        else {
+            return f1;
+        }
+    }
+
+    auto tueWasExEx(bool flag, auto f1, auto f2) -> decltype (f1 + f2)
+    {
+        if (flag) {
+            return f2;
+        }
+        else {
+            return f1;
+        }
+    }
+
+    void anwendung()
+    {
+        auto result = tueWasExEx(false, 123, 456l);
+        auto result2 = tueWasExEx(false, 123.0f, 456.5);
+    }
+
+    //auto tueWas(bool flag, float f1, double f2) -> float
+    //{
+    //    if (flag) {
+    //        return f2;
+    //    }
+    //    else {
+    //        return f1;
+    //    }
+    //}
+
+
+
 
     auto foo(bool flag, char ch, double d) -> double
     {
@@ -109,6 +168,13 @@ namespace Auto_Examples {
 
     const std::string message{ "This is an important message :)" };
 
+    //std::string& getMessageZwei()
+    //{
+    //    // Noooooooooooooooooooooooooo
+    //    std::string message{ "Result"};
+    //    return message;
+    //}
+
     const std::string& getMessage()
     {
         return message;
@@ -116,7 +182,8 @@ namespace Auto_Examples {
 
     void test_01_e() {
 
-        auto msg = getMessage();
+        auto msg = getMessage();   //  Kopie
+        
         std::cout << "Message: " << msg << std::endl;
 
         // but:

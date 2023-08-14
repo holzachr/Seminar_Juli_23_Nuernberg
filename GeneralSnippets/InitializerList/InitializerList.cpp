@@ -78,7 +78,9 @@ namespace InitializerList {
             }
         };
 
-        // same example - with brace elision
+
+
+        // same example - with brace elision // Klammern auslassen
         Polygon polygon2
         {                          // c'tor Polygon - using brace initialization syntax
             { 45.0, 45.0 },        // c'tor Point - using brace initialization syntax
@@ -94,9 +96,9 @@ namespace InitializerList {
     class TinyContainer {
     public:
         TinyContainer() {}
-        TinyContainer(int value) {}
-        TinyContainer(std::initializer_list<int>) {};
-        TinyContainer(const std::vector<int>&) {};
+        TinyContainer(int) {}
+        TinyContainer(std::initializer_list<int>) {}
+        TinyContainer(const std::vector<int>&) {}
     };
 
     void test_04() {

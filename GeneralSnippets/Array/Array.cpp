@@ -311,6 +311,8 @@ namespace StdArray {
 
     void printSpan(std::span<int> values) {
 
+        values[0] = 123;
+
         std::cout << std::format("Number of elements: {}\n", values.size());
         std::cout << std::format("Size of span: {}\n", values.size_bytes());
 
@@ -321,6 +323,8 @@ namespace StdArray {
     }
 
     void printSpanConst(std::span<const int> values) {
+
+        // values[0] = 123;
 
         std::cout << std::format("Number of elements: {}\n", values.size());
         std::cout << std::format("Size of span: {}\n", values.size_bytes());

@@ -25,9 +25,12 @@ namespace TupleSamples {
 
         // accessing tuple values using std::get 
         std::cout << "The values of tuple are : ";
+
+        const int n = 1;
+
         std::cout 
             << std::get<0>(values) << " - " 
-            << std::get<1>(values) << " - " 
+            << std::get<n>(values) << " - "   // NIEEEEEEEEEEE
             << std::get<2>(values)
             << std::endl;
 
@@ -68,6 +71,8 @@ namespace TupleSamples {
         Row row3 = std::make_tuple(12, 'C', 3.33, "Hans");
 
         std::vector<Row> mySheet;
+
+        std::vector<std::tuple<int, char, double, std::string>> mySheet2;
 
         mySheet.push_back(row1);
         mySheet.push_back(row2);
